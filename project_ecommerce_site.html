@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <style>
+            h1 {
+                text-align: center;
+            }
+
+            div.gallery {
+                margin: 5px;
+                border: 1px solid #ccc;
+                float: left;
+                width: 180px;
+            }
+
+            div.gallery:hover {
+                border: 1px solid #777;
+            }
+
+            div.gallery img {
+                width: 100%;
+                height: auto;
+            }
+
+            div.desc {
+                padding: 15px;
+                text-align: center;
+            }
+
+            #wrapper {
+                float: left;
+                width: 600px;
+                margin-left: 10px;
+                clear:both;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Jett's Gaming Laptop Shop</h1>
+
+        <div class="gallery">
+            <a target="_blank" href="img/msi_laptop.jpg">
+                <img src="img/msi_laptop.jpg" alt="msi" width="300" height="200">
+            </a>
+            <div class="desc">MSI Laptop</div>
+            <div class="desc"> $1000 </div>
+            <input type="text" id="msi_order_count" value="0">
+        </div>
+                  
+        <div class="gallery">
+            <a target="_blank" href="img/alienware_laptop.jpg">
+                <img src="img/alienware_laptop.jpg" alt="alienware" width="600" height="400">
+            </a>
+            <div class="desc">Alienware Laptop</div>
+            <div class="desc"> $1300 </div>
+            <input type="text" id="alienware_order_count" value="0">
+        </div>
+                  
+        <div class="gallery">
+            <a target="_blank" href="img/razer_laptop.jpg">
+                <img src="img/razer_laptop.jpg" alt="razer" width="600" height="400">
+            </a>
+            <div class="desc">Razer Laptop</div>
+            <div class="desc"> $1500 </div>
+            <input type="text" id="razer_order_count" value="0">
+        </div>
+    
+        <div>
+
+        </div>
+        <div id="wrapper">
+            <button onclick="checkoutOrder()">Checkout Order</button>
+        </div>
+    
+        <div id="wrapper">
+            <p>
+                <span>CUSTOMER ORDER DETAILS: </span>
+            </p>
+            <p>
+                <span>Subtotal: </span>
+                <span id="output_cus_sub_total"></span>
+            </p>
+            <p>            
+                <span>Tax: </span>
+                <span id="output_cus_tax"></span>
+            </p>
+            <p>
+                <span>Shipping and Handling: </span>
+                <span id="output_sh_cost"></span>
+            </p>
+            <p>
+                <span>Customer Total: </span>
+                <span id="output_cus_total"></span>
+                </p>  
+        </div>
+
+        <div id="wrapper">
+            <p>
+                <span>ORDER DETAILS FOR COMPANY: </span>
+            </p>
+            <p>
+                <span>Total Items Sold: </span>
+                <span id="output_total_item_sold"></span>
+            </p>
+            <p>
+                <span>Customer Subtotal: </span>
+                <span id="output_cus_sub_total2"></span>
+            </p>
+            <p>            
+                <span>Company Subtotal: </span>
+                <span id="output_co_sub_total"></span>
+            </p>
+            <p>
+                <span>Profit/Loss: </span>
+                <span id="output_profit_loss"></span>
+            </p>
+        </div>
+
+        <script>
+            function checkoutOrder() {
+                var msi_ws_price = 500;
+                var msi_rt_price = 1000;
+                var alien_ws_price = 700;
+                var alien_rt_price = 1300;
+                var raz_ws_price = 1000;
+                var raz_rt_price = 1500;
+                var msi_order = 0;
+                var alien_order = 0;
+                var raz_order = 0;
+                var tax_rate = 8.125;
+                var tax = 0;
+                var profit = 0;
+                var items_sold = 0;
+                var customer_sub_total = 0;
+                var customer_total = 0;
+                var company_sub_total = 0;
+                var company_total = 0;
+                var sh_cost = 0;
+
+                msi_order = parseInt(document.getElementById("msi_order_count").value);
+                alien_order = parseInt(document.getElementById("alienware_order_count").value);
+                raz_order = parseInt(document.getElementById("razer_order_count").value);
+                //console.log("msi_order=" + msi_order);
+
+                customer_sub_total = msi_rt_price * msi_order + alien_rt_price * alien_order + raz_rt_price * raz_order;
+                company_sub_total = msi_ws_price * msi_order + alien_ws_price * alien_order + raz_ws_price * raz_order;
+                items_sold = msi_order + alien_order + raz_order;
+                tax = customer_sub_total * (tax_rate/100);
+    
+                if (customer_sub_total < 100) { sh_cost = 25;}
+                else if (customer_sub_total >= 100 && customer_sub_total <= 200) { sh_cost = 10;}
+                else if (customer_sub_total > 200) { sh_cost = 0;}
+
+                customer_total = customer_sub_total + tax + sh_cost;
+                profit = customer_sub_total - company_sub_total;
+
+                document.getElementById("output_cus_sub_total").innerHTML = customer_sub_total;
+                document.getElementById("output_cus_tax").innerHTML = tax;
+                document.getElementById("output_sh_cost").innerHTML = sh_cost;
+                document.getElementById("output_cus_total").innerHTML = customer_total;
+
+                document.getElementById("output_total_item_sold").innerHTML = items_sold;
+                document.getElementById("output_cus_sub_total2").innerHTML = customer_sub_total;
+                document.getElementById("output_co_sub_total").innerHTML = company_sub_total;
+                document.getElementById("output_profit_loss").innerHTML = profit;
+            }
+        </script>
+    </body>    
+</html>
